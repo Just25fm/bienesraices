@@ -8,7 +8,7 @@
 </head>
 <body>
     
-    <header class="header">
+    <header class="header <?php echo isset( $inicio ) ? 'inicio' : ''; ?>">
         <div class="contenedor contenido-header">
             <div class="barra">
                 <a href="/">
@@ -30,26 +30,6 @@
                 </div>
                 
             </div> <!--.barra-->
-            <h1>Venta de Casas y Departamentos Exclusivos de Lujos</h1>
+
         </div>
     </header>
-
-    <main class="contenedor seccion">
-        <h1>Título Página</h1>
-    </main>
-
-    <footer class="footer seccion">
-        <div class="contenedor contenedor-footer">
-            <nav class="navegacion">
-                <a href="nosotros.html">Nosotros</a>
-                <a href="anuncios.html">Anuncios</a>
-                <a href="blog.html">Blog</a>
-                <a href="Contacto.html">Contacto</a>
-            </nav>
-        </div>
-
-        <p class="copyright">Todos los derechos reservador 2025 &copy;</p>
-    </footer>
-    <script src="build/js/bundle.min.js"></script>
-</body>
-</html>
