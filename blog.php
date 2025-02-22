@@ -1,4 +1,8 @@
-<?php include 'includes/templates/header.php'; ?>
+<?php 
+    require 'includes/funciones.php';
+
+    incluirTemplate('header');
+?>
 
     <main class="contenedor seccion contenido-centrado">
         <h1>Nuestro Blog</h1>
@@ -13,7 +17,7 @@
             </div>
 
             <div class="texto-entrada">
-                <a href="entrada.html">
+                <a href="entrada.php">
                     <h4>Terraza en el techo de tu casa</h4>
                     <p class="informacion-meta">Escrito el: <span>04/02/2025</span> por: <span>Admin</span> </p>
 
@@ -35,7 +39,7 @@
             </div>
 
             <div class="texto-entrada">
-                <a href="entrada.html">
+                <a href="entrada.php">
                     <h4>Guía para la decoración de tu hogar</h4>
                     <p class="informacion-meta">Escrito el: <span>04/02/2025</span> por: <span>Admin</span> </p>
 
@@ -57,7 +61,7 @@
             </div>
 
             <div class="texto-entrada">
-                <a href="entrada.html">
+                <a href="entrada.php">
                     <h4>Terraza en el techo de tu casa</h4>
                     <p class="informacion-meta">Escrito el: <span>04/02/2025</span> por: <span>Admin</span> </p>
 
@@ -79,7 +83,7 @@
             </div>
 
             <div class="texto-entrada">
-                <a href="entrada.html">
+                <a href="entrada.php">
                     <h4>Guía para la decoración de tu hogar</h4>
                     <p class="informacion-meta">Escrito el: <span>04/02/2025</span> por: <span>Admin</span> </p>
 
@@ -92,4 +96,6 @@
         </artcile>
     </main>
 
-<?php include 'includes/templates/footer.php'; ?>
+<?php 
+    incluirTemplate('footer'); 
+?>
