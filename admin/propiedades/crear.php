@@ -4,6 +4,10 @@
 
     $db = conectarDB();
 
+    // Consultar para obtener los vendedores
+    $consulta = "SELECT * FROM vendedores";
+    $resultado = mysqli_query($db, $consulta);
+
     // Arreglo con mensaje de errores
     $errores = [];
 
@@ -17,9 +21,9 @@
 
     // Ejecutar el código cuando se envía el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      echo "<pre>";
-      var_dump($_POST);
-      echo "</pre>";
+      // echo "<pre>";
+      // var_dump($_POST);
+      // echo "</pre>";
 
       $titulo = $_POST['titulo'];
       $precio = $_POST['precio'];
@@ -27,7 +31,8 @@
       $habitaciones = $_POST['habitaciones'];
       $wc = $_POST['wc'];
       $estacionamiento = $_POST['estacionamiento'];
-      $vendedorId = isset($_POST['vendedor']) ? $_POST['vendedor'] : '';
+      $creado = date('Y/m/d');
+      $vendedorId = $_POST['vendedor'];
 
       if (!$titulo) {
         $errores[] = "Debes añadir un título";
@@ -47,23 +52,23 @@
       if (!$estacionamiento) {
         $errores[] = "Debes añadir el número de estacionamientos";
       }
-      if (!$vendedorId || $vendedorId === '') {
+      if (!$vendedorId) {
         $errores[] = "Debes añadir un vendedor";
       }
 
       if(empty($errores)) {
         // Insertar en la base de datos
-        $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, vendedorId) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$vendedorId')";
+        $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado' '$vendedorId')";
 
         //echo $query;
 
-        $resultado = mysqli_query($db, $query);
+        $insertado = mysqli_query($db, $query);
 
-        if ($resultado) {
-          echo "Insertado correctamente";
-        } else {
-          echo "Error";
+        if ($insertado) {
+          //Redireccionar al usuario
+          header('Location: /admin');
         }
+        
       }
     } 
 
@@ -119,8 +124,9 @@
 
             <select name="vendedor">
               <option value="" disabled selected>-- Seleccione --</option>
-              <option value="1">Juan</option>
-              <option value="2">Judyth</option>
+              <?php while($vendedor = mysqli_fetch_assoc($resultado)) : ?>
+                <option <?php echo $vendedorId === $vendedor['id'] ? 'selected' : ''; ?> value="<?php echo $vendedor['id'];?>"> <?php echo $vendedor['nombre'] . " " . $vendedor['apellido']; ?></option>
+              <?php endwhile; ?>
             </select>
 
           </fieldset>
