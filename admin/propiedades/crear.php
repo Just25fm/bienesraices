@@ -25,14 +25,21 @@
       // var_dump($_POST);
       // echo "</pre>";
 
-      $titulo = $_POST['titulo'];
-      $precio = $_POST['precio'];
-      $descripcion = $_POST['descripcion'];
-      $habitaciones = $_POST['habitaciones'];
-      $wc = $_POST['wc'];
-      $estacionamiento = $_POST['estacionamiento'];
+      // echo "<pre>";
+      // var_dump($_FILES);
+      // echo "</pre>";
+      
+      $titulo = mysqli_real_escape_string( $db, $_POST['titulo'] );
+      $precio = mysqli_real_escape_string( $db, $_POST['precio'] );
+      $descripcion = mysqli_real_escape_string( $db, $_POST['descripcion'] );
+      $habitaciones = mysqli_real_escape_string( $db, $_POST['habitaciones'] );
+      $wc = mysqli_real_escape_string( $db, $_POST['wc'] );
+      $estacionamiento = mysqli_real_escape_string( $db, $_POST['estacionamiento'] );
+      $vendedorId = mysqli_real_escape_string( $db, $_POST['vendedor'] );
       $creado = date('Y/m/d');
-      $vendedorId = $_POST['vendedor'];
+
+      // Asignar files hacia una variable
+      $imagen = $_FILES['imagen'];
 
       if (!$titulo) {
         $errores[] = "Debes añadir un título";
@@ -55,10 +62,19 @@
       if (!$vendedorId) {
         $errores[] = "Debes añadir un vendedor";
       }
+      if ($imagen['name'] || $imagen['error']) {
+         $errores[] = "Debes añadir una imagen";
+      }
+
+      // Validar por tamaño (100 kb máximo)
+      $medida = 1000 * 100;
+      if ($imagen['size'] > $medida) {
+        $errores[] = "El tamaño de la imagen debe ser menor a 100 KB";
+      }
 
       if(empty($errores)) {
         // Insertar en la base de datos
-        $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado' '$vendedorId')";
+        $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId')";
 
         //echo $query;
 
@@ -87,7 +103,7 @@
           </div>
         <?php endforeach;?>
 
-        <form class="formulario" method="POST" action="/admin/propiedades/crear.php">
+        <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
           <fieldset>
             <legend>Información General</legend>
 
@@ -98,7 +114,7 @@
             <input type="number" id="precio" name="precio" placeholder="Precio Propiedad" value="<?php echo $precio; ?>">
 
             <label for="imagen">Imagen:</label>
-            <input type="file" id="imagen" accept="image/jpeg, image/png">
+            <input type="file" id="imagen" accept="image/jpeg, image/png" name="imagen">
 
             <label for="descripcion">Descripción:</label>
             <textarea id="descripcion" name="descripcion" placeholder="Descripción Propiedad"><?php echo $descripcion; ?></textarea>
