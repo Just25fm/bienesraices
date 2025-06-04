@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
     eventListerners();
 
     darkMode();
+
+    //mostrarImagen();
+
 });
 
 function darkMode() {
@@ -44,3 +47,23 @@ function navegacionResponsive() {
     navegacion.classList.toggle('mostrar');
     
 }
+
+/** 
+function mostrarImagen() {
+    
+    // Seleccionar imagen
+    const imagen = document.querySelector('.imagen-small')
+
+    imagen.onclick = function() {
+        console.log(imagen)
+        // Generar Modal
+        const modal = document.createElement('DIV')
+        modal.classList.add('modal')
+        modal.onclick = function
+
+        // Agregar al HTML
+        const body = document.querySelector('body')
+        body.appendChild(modal)
+    }
+}
+*/

@@ -1,7 +1,6 @@
 <?php
     // Base de datos
     require '../../includes/config/database.php';
-
     $db = conectarDB();
 
     // Consultar para obtener los vendedores
@@ -98,7 +97,7 @@
 
         if ($insertado) {
           //Redireccionar al usuario
-          header('Location: /admin');
+          header('Location: /admin?resultado=1');
         }
         
       }
