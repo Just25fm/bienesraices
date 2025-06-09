@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //mostrarImagen();
 
+    confirmarEliminacion();
+
 });
 
 function darkMode() {
@@ -46,6 +48,31 @@ function navegacionResponsive() {
 
     navegacion.classList.toggle('mostrar');
     
+}
+
+function confirmarEliminacion() {
+    const formularios = document.querySelectorAll('.eliminar');
+
+    formularios.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // Evita el envío automático
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Estas seguro que deseas eliminar esta propiedad?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Envía el formulario si se confirma
+                }
+            });
+        });
+    });
 }
 
 /** 

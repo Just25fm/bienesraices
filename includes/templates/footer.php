@@ -10,6 +10,7 @@
 
     <p class="copyright">Todos los derechos reservados <?php echo date('Y'); ?> &copy;</p>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="/build/js/bundle.min.js"></script>
 </body>
 </html>
