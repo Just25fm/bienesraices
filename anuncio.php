@@ -16,7 +16,7 @@
     $db = conectarDB();
 
     // Consultar
-    $query = "SELECT * FROM propiedades WHERE id = ${id}";
+    $query = "SELECT * FROM propiedades WHERE id = {$id}";
 
     // Obtener los resultados
     $resultado = mysqli_query($db, $query);

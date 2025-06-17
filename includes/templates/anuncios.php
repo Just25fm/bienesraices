@@ -4,7 +4,7 @@
   $db = conectarDB();
 
   // Consultar
-  $query = "SELECT * FROM propiedades LIMIT ${limite}";
+  $query = "SELECT * FROM propiedades LIMIT {$limite}";
 
   // Obtener los resultados
   $resultado = mysqli_query($db, $query);

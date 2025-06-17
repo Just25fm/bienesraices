@@ -1,3 +1,11 @@
+<?php
+    if(!isset($_SESSION)) {
+        session_start();
+    }
+
+    $auth = $_SESSION['login'] ?? null;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
