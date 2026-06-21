@@ -1,1 +1,45 @@
-node_modules
+# ==========================================
+# GITIGNORE PARA PROYECTO BIENES RAÍCES
+# ==========================================
+
+# Dependencias de Node.js y paquetes de terceros
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Dependencias de PHP (Composer)
+vendor/
+
+# Archivos compilados y de construcción (Gulp / Sass / Webpack)
+build/
+dist/
+.cache/
+
+# Archivos ocultos del Sistema Operativo
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
+
+# Variables de entorno y credenciales privadas (Seguridad)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Configuraciones de Editores de Código / IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Archivos dinámicos / Subidas de usuarios
+# (Descomenta la línea de abajo si en 'imagenes' se guardan las fotos que suben los usuarios)
+# imagenes/

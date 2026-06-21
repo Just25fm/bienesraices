@@ -1,0 +1,17 @@
+{
+    "name": "juan_fierro/bienesraices",
+    "description": "Creando un proyecto con POO",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "./classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "Juan Fierro",
+            "email": "juan_fierro@unicomer.com"
+        }
+    ],
+    "require": {}
+}

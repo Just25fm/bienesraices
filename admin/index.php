@@ -61,7 +61,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>TItulo</th>
+                    <th>Título</th>
                     <th>Imagen</th>
                     <th>Precio</th>
                     <th>Acciones</th>

@@ -4,6 +4,15 @@
 -- ------------------------------------------------------
 -- Server version	8.0.39
 
+--
+-- Create database
+--
+DROP DATABASE IF EXISTS bienesraices_crud;
+CREATE DATABASE bienesraices_crud;
+USE bienesraices_crud;
+
+-- -------------------------------------------------------
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;

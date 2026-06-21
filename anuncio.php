@@ -1,8 +1,5 @@
 <?php 
-    require 'includes/funciones.php';
-
-    incluirTemplate('header');
-
+  
     // Obtener id pasada por url
     $id = $_GET['id'] ?? null;
     $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -11,8 +8,8 @@
         header('location: /');
     }
 
-    // Importar la conexión
-    require __DIR__ . '/includes/config/database.php';
+    require 'includes/app.php';
+
     $db = conectarDB();
 
     // Consultar
@@ -30,6 +27,7 @@
     // echo '<pre>';
     // echo var_dump($propiedad);
     // echo '</pre>';
+      incluirTemplate('header');
 ?>
 
     <main class="contenedor seccion contenido-centrado">

@@ -1,13 +1,21 @@
 <?php
 
-    require '../../includes/funciones.php';
+    require '../../includes/app.php';
+
+    use App\Propiedad;
+
+    $propiedad = new Propiedad();
+
+    echo "<pre>";
+    var_dump($propiedad);
+    echo "</pre>";
+
     $auth = estaAutenticado();
 
     if (!$auth) {
       header('location: /');
     }
     // Base de datos
-    require '../../includes/config/database.php';
     $db = conectarDB();
 
     // Consultar para obtener los vendedores
@@ -96,7 +104,9 @@
         move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
 
         // Insertar en la base de datos
-        $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId')";
+        $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones,
+         wc, estacionamiento, creado, vendedorId) VALUES ('$titulo', '$precio', '$nombreImagen', 
+         '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId')";
 
         //echo $query;
 
