@@ -1,8 +1,10 @@
 <?php
 
     require '../../includes/app.php';
-
     use App\Propiedad;
+    use Intervention\Image\Drivers\Gd\Driver;
+    use Intervention\Image\ImageManager;
+
 
     estaAutenticado();
 
@@ -32,17 +34,19 @@
 
       $propiedad = new Propiedad($_POST);
 
+      // Generar nombre único
+        $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
+        if($_FILES['imagen']['tmp_name']){
+          $manager = new ImageManager(new Driver());
+          $imagen = $manager->read($_FILES['imagen']['tmp_name'])->cover(800, 600);
+
+        }
+
       $errores = $propiedad->validar();
 
       if(empty($errores)) {
-        
-        $propiedad->guardar();
      
-        // Asignar files hacia una variable
-        $imagen = $_FILES['imagen'];
-
         /** Subida de archivos */
-
         //Crear carpeta
         $carpetaImagenes = '../../imagenes/';
 
@@ -50,18 +54,9 @@
           mkdir($carpetaImagenes);
         }
 
-        // Generar nombre único
-        $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
-
-        // Subir la imagen
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
-
+        $resultado = $propiedad->guardar();
       
-        //echo $query;
-
-        $insertado = mysqli_query($db, $query);
-
-        if ($insertado) {
+        if ($resultado) {
           //Redireccionar al usuario
           header('Location: /admin?resultado=1');
         }

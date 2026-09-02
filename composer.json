@@ -13,5 +13,7 @@
             "email": "juan_fierro@unicomer.com"
         }
     ],
-    "require": {}
+    "require": {
+        "intervention/image": "^4.3"
+    }
 }
