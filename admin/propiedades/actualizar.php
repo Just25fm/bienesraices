@@ -1,8 +1,11 @@
 <?php
 
 use App\Propiedad;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager as Image;
 
 require '../../includes/app.php';
+
 estaAutenticado();
 
 // Validar por ID válido
@@ -30,46 +33,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
   // Asignar los atributos
   $args = $_POST['propiedad'];
+  
   $propiedad->sincronizar($args);
   
+  // Validación
   $errores = $propiedad->validar();
+
+  // Subida de archivos
+  // Generar nombre único
+  $nombreImagen = md5(uniqid(rand(), true)) . '.jpg';
+
+  if ($_FILES['propiedad']['tmp_name']['imagen']) {
+    $manager = new Image(Driver::class);
+    $imagen = $manager->read($_FILES['propiedad']['tmp_name']['imagen'])->cover(800, 600);
+    $propiedad->setImagen($nombreImagen);
+  }
 
   if (empty($errores)) {
 
-    // /** Subida de archivos */
-    if (!is_dir(CARPETA_IMAGENES)) {
-      mkdir(CARPETA_IMAGENES);
+    // Almacenar la imagen
+    if ($_FILES['propiedad']['tmp_name']['imagen']) {
+      $imagen->save(CARPETA_IMAGENES . $nombreImagen);
     }
 
-    $nombreImagen = '';
+    $propiedad->guardar();
 
-    // Verificar que se ha agregado nueva imagen
-    if ($imagen['name']) {
-      // Eliminar imagen previa
-      unlink(CARPETA_IMAGENES . $propiedad->imagen);
-
-      // Generar nombre único
-      $nombreImagen = md5(uniqid(rand(), true)) . '.jpg';
-
-      // Subir la imagen
-      move_uploaded_file($imagen['tmp_name'], CARPETA_IMAGENES . $nombreImagen);
-    } else {
-      $nombreImagen = $propiedad->imagen;
-    }
-
-
-
-    // Insertar en la base de datos
-    $query = "UPDATE propiedades SET titulo = '{$titulo}', precio = '{$precio}', imagen = '{$nombreImagen}', descripcion = '{$descripcion}', habitaciones = {$habitaciones}, wc = {$wc}, estacionamiento = {$estacionamiento}, vendedorId = {$vendedorId} WHERE id = {$id}";
-
-    //echo $query;
-
-    $insertado = mysqli_query($db, $query);
-
-    if ($insertado) {
-      //Redireccionar al usuario
-      header('Location: /admin?resultado=2');
-    }
   }
 }
 

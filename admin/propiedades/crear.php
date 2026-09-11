@@ -26,15 +26,15 @@
       $propiedad = new Propiedad($_POST['propiedad']);
 
       // Generar nombre único
-        $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
+      $nombreImagen = md5( uniqid( rand(), true ) ) . '.jpg';
 
-        // Setear la imagen
-        // Realiza un resize a la imagen con Intervention
-        if($_FILES['propiedad']['tmp_name']['imagen']) {
-          $manager = new Image(Driver::class);
-          $imagen = $manager->read($_FILES['propiedad']['tmp_name']['imagen'])->cover(800, 600);
-          $propiedad->setImagen($nombreImagen);
-        }
+      // Setear la imagen
+      // Realiza un resize a la imagen con Intervention
+      if($_FILES['propiedad']['tmp_name']['imagen']) {
+        $manager = new Image(Driver::class);
+        $imagen = $manager->read($_FILES['propiedad']['tmp_name']['imagen'])->cover(800, 600);
+        $propiedad->setImagen($nombreImagen);
+      }
 
       $errores = $propiedad->validar();
 
