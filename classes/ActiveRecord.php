@@ -28,20 +28,6 @@ class ActiveRecord {
     self::$db = $database;
   }
 
-  public function __construct($args = [])
-  {
-    $this->id = $args['id'] ?? '';
-    $this->titulo = $args['titulo'] ?? '';
-    $this->precio = $args['precio'] ?? '';
-    $this->imagen = $args['imagen'] ?? '';
-    $this->descripcion = $args['descripcion'] ?? '';
-    $this->habitaciones = $args['habitaciones'] ?? '';
-    $this->wc = $args['wc'] ?? '';
-    $this->estacionamiento = $args['estacionamiento'] ?? '';
-    $this->creado = date('Y/m/d');
-    $this->vendedorId = $args['vendedorId'] ?? '1';
-  }
-
   public function guardar()
   {
     if (!is_null($this->id)) {
@@ -114,7 +100,7 @@ class ActiveRecord {
   public function atributos()
   {
     $atributos = [];
-    foreach (self::$columnasDB as $columna) {
+    foreach (static::$columnasDB as $columna) {
       if ($columna === 'id')
         continue;
       $atributos[$columna] = $this->$columna;
@@ -136,38 +122,13 @@ class ActiveRecord {
 
   public static function getErrores()
   {
-    return self::$errores;
+    return static::$errores;
   }
 
   public function validar()
   {
-    if (!$this->titulo) {
-      self::$errores[] = "Debes añadir un título";
-    }
-    if (!$this->precio) {
-      self::$errores[] = "Debes añadir un precio";
-    }
-    if (strlen($this->descripcion) < 50) {
-      self::$errores[] = "Debes añadir una descripción y debe de tener al menos 50 caracteres";
-    }
-    if (!$this->habitaciones) {
-      self::$errores[] = "Debes añadir el número de habitaciones";
-    }
-    if (!$this->wc) {
-      self::$errores[] = "Debes añadir el número de baños";
-    }
-    if (!$this->estacionamiento) {
-      self::$errores[] = "Debes añadir el número de estacionamientos";
-    }
-    if (!$this->vendedorId) {
-      self::$errores[] = "Debes añadir un vendedor";
-    }
-
-    if (!$this->imagen) {
-      self::$errores[] = "Debes añadir una imagen";
-    }
-
-    return self::$errores;
+    static::$errores = [];
+    return static::$errores;
   }
 
   public function setImagen($imagen)
@@ -219,7 +180,7 @@ class ActiveRecord {
     // Iterar los resultados
     $array = [];
     while ($registro = $resultado->fetch_assoc()) {
-      $array[] = self::crearObjeto($registro);
+      $array[] = static::crearObjeto($registro);
     }
 
     // Liberar la memoria
@@ -231,7 +192,7 @@ class ActiveRecord {
 
   protected static function crearObjeto($registro)
   {
-    $objeto = new self;
+    $objeto = new static;
 
     foreach ($registro as $key => $value) {
       if (property_exists($objeto, $key)) {
