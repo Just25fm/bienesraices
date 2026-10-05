@@ -8,20 +8,12 @@ class ActiveRecord {
   protected static $db;
   protected static $columnasDB = [];
   protected static $tabla = '';
+  protected static $entidad = '';
 
   // Errores
   protected static $errores = [];
 
   public $id;
-  public $titulo;
-  public $precio;
-  public $imagen;
-  public $descripcion;
-  public $habitaciones;
-  public $wc;
-  public $estacionamiento;
-  public $creado;
-  public $vendedorId;
 
   public static function setDB($database)
   {
@@ -37,6 +29,14 @@ class ActiveRecord {
       // Crear
       $this->crear();
     }
+  }
+
+  public function alertas($mensaje, $tipo)
+  {
+    $_SESSION['alerta'] = [
+      'mensaje' => static::$entidad . ' ' . $mensaje,
+      'tipo' => $tipo
+    ];
   }
 
   public function crear()
@@ -55,7 +55,10 @@ class ActiveRecord {
 
     if ($resultado) {
       //Redireccionar al usuario
-      header('Location: /admin?resultado=1');
+      $this->alertas('Creado Correctamente', 'exito');
+      header('location: /admin');
+      exit;
+      //header('Location: /admin?resultado=1');
     }
   }
 
@@ -78,7 +81,10 @@ class ActiveRecord {
 
     if ($resultado) {
       //Redireccionar al usuario
-      header('Location: /admin?resultado=2');
+      $this->alertas('Actualizado Correctamente', 'exito');
+      header('location: /admin');
+      exit;
+      //header('Location: /admin?resultado=2');
     }
   }
 
@@ -92,7 +98,12 @@ class ActiveRecord {
 
     if ($resultado) {
       $this->borrarImagen();
-      header('location: /admin?resultado=3');
+      $this->alertas('Eliminado Correctamente', 'exito');
+      //debuguear($_SESSION);
+      header('location: /admin');
+      exit;
+      //debuguear($_SESSION);
+      //header('location: /admin?resultado=3');
     }
   }
 
@@ -147,11 +158,15 @@ class ActiveRecord {
 
   public function borrarImagen()
   {
-    // Comprobar si existe el archivo
-    $existeArchivo = file_exists(CARPETA_IMAGENES . $this->imagen);
-    if ($existeArchivo) {
-      unlink(CARPETA_IMAGENES . $this->imagen);
+    // Comprobar si el objeto actual tiene la propiedad 'imagen'
+    if (property_exists($this, 'imagen')) {
+      // Comprobar si existe el archivo
+      $existeArchivo = file_exists(CARPETA_IMAGENES . $this->imagen);
+      if ($existeArchivo) {
+        unlink(CARPETA_IMAGENES . $this->imagen);
+      }
     }
+    
   }
 
   public static function all()

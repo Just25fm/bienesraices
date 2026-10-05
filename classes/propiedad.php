@@ -5,6 +5,7 @@ namespace App;
 class Propiedad extends ActiveRecord {
 
   protected static $tabla = 'propiedades';
+  protected static $entidad = 'Anuncio';
   protected static $columnasDB = [
     'id',
     'titulo',
