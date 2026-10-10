@@ -15,7 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   //debuguear($_POST);
   $vendedor = new Vendedor($_POST['vendedor']);
 
-  debuguear($vendedor);
+  // Validar que no hayan campos vacios
+  $errores = $vendedor->validar();
+
+  //debuguear($vendedor);
+
+  if(empty($errores)) {
+    $vendedor->guardar();
+  }
 
 }
 

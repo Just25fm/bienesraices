@@ -22,6 +22,7 @@ class ActiveRecord {
 
   public function guardar()
   {
+    //debuguear($this);
     if (!is_null($this->id)) {
       // Actualizar
       $this->actualizar();
@@ -50,6 +51,8 @@ class ActiveRecord {
     $query .= ") VALUES ('";
     $query .= join("', '", array_values($atributos));
     $query .= "')";
+
+    debuguear ($query);
 
     $resultado = self::$db->query($query);
 
