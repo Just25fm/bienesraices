@@ -25,8 +25,10 @@ class Vendedor extends ActiveRecord{
     $this->id = $args['id'] ?? null;
     $this->nombre = $args['nombre'] ?? '';
     $this->apellido = $args['apellido'] ?? '';
-    $this->telefono = $args['telefono'] ?? null;
-    $this->email = $args['email'] ?? null;
+    $this->telefono = !empty($args['telefono']) ? $args['telefono'] : null;
+    $this->email = !empty($args['email']) ? $args['email'] : null;
+    // $this->telefono = $args['telefono'] ?? null;
+    // $this->email = $args['email'] ?? null;
   }
 
   public function validar()
@@ -42,10 +44,10 @@ class Vendedor extends ActiveRecord{
     }
 
     foreach ($vendedores as $vendedor) {
-      if ($this->telefono === $vendedor->telefono) {
+      if (!is_null($this->telefono) && $this->telefono === $vendedor->telefono) {
         self::$errores[] = "El teléfono ya está registrado";
       }
-      if ($this->email === $vendedor->email) {
+      if (!is_null($this->email) && $this->email === $vendedor->email) {
         self::$errores[] = "El email ya está registrado";
       }
     }

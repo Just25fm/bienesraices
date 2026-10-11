@@ -45,14 +45,23 @@ class ActiveRecord {
     // Sanitizat los datos
     $atributos = $this->sanitizarAtributos();
 
+    // Formatear valores: strings con comillas, nulos sin comillas
+    $valores = [];
+    foreach ($atributos as $value) {
+      $valores[] = is_null($value) ? "NULL" : "'{$value}'";
+    }
+
     // Insertar en la base de datos
     $query = "INSERT INTO " . static::$tabla . " (";
     $query .= join(', ', array_keys($atributos));
-    $query .= ") VALUES ('";
-    $query .= join("', '", array_values($atributos));
-    $query .= "')";
+    $query .= ") VALUES (";
+    $query .= join(", ", $valores);
+    $query .= ")";
+    // $query .= ") VALUES ('";
+    // $query .= join("', '", array_values($atributos));
+    // $query .= "')";
 
-    debuguear ($query);
+    //debuguear ($query);
 
     $resultado = self::$db->query($query);
 
@@ -72,7 +81,9 @@ class ActiveRecord {
 
     $valores = [];
     foreach ($atributos as $key => $value) {
-      $valores[] = "{$key}='{$value}'";
+      // Inyectar NULL sin comillas si el valor es nulo
+      $valores[] = is_null($value) ? "{$key}=NULL" : "{$key}='{$value}'";
+      //$valores[] = "{$key}='{$value}'";
     }
 
     $query = "UPDATE " . static::$tabla . " SET ";
@@ -128,7 +139,9 @@ class ActiveRecord {
     $sanitizado = [];
 
     foreach ($atributos as $key => $value) {
-      $sanitizado[$key] = self::$db->escape_string($value);
+      // Evita escapar los nulos
+      $sanitizado[$key] = is_null($value) ? null : self::$db->escape_string($value);
+      //$sanitizado[$key] = self::$db->escape_string($value);
     }
 
     return $sanitizado;
