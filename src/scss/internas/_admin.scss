@@ -10,6 +10,10 @@
     background-color: $rojo;
   }
 
+  &.advertencia {
+    background-color: $amarillo;
+  }
+
   &.exito {
     background-color: $verde;
   }
