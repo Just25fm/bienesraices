@@ -2,6 +2,7 @@
 require '../includes/app.php';
 estaAutenticado();
 
+// Importar las clases necesarias
 use App\Propiedad;
 use App\Vendedor;
 
@@ -48,13 +49,10 @@ incluirTemplate('header');
     <?php endif; ?>
 
     <?php if (false): ?>
-        <!-- <?php if (intval($resultado) === 1): ?>
-        <p class="alerta exito">Anuncio creado correctamente</p>
-        <?php elseif (intval($resultado) === 2): ?>
-        <p class="alerta exito">Anuncio actualizado correctamente</p>
-        <?php elseif (intval($resultado) === 3): ?>
-        <p class="alerta exito">Anuncio eliminado correctamente</p>
-        <?php endif; ?> -->
+        $mensaje = mostrarNotificacion(intval($resultado));
+        <?php if ($mensaje): ?>
+            <p class="alerta exito"><?php echo s($mensaje); ?></p>
+        <?php endif; ?>
     <?php endif; ?>
 
     <a href="/admin/propiedades/crear.php" class="boton boton-verde">Nueva Propiedad</a>

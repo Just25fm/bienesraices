@@ -194,6 +194,15 @@ class ActiveRecord {
     return $resultado;
   }
 
+  public static function get($cantidad)
+  {
+    $query = "SELECT * FROM " . static::$tabla . " LIMIT " . $cantidad;
+
+    $resultado = self::consultarSQL($query);
+
+    return $resultado;
+  }
+
   public static function find($id)
   {
     $query = "SELECT * FROM " . static::$tabla . " WHERE id = {$id}";
@@ -239,7 +248,9 @@ class ActiveRecord {
   {
     foreach ($args as $key => $value) {
       if (property_exists($this, $key) && !is_null($value)) {
-        $this->$key = $value;
+        // Si el usuario dejó el campo vacío (''), forzamos a que sea null
+        $this->$key = $value === '' ? null : $value;
+        //$this->$key = $value;
       }
     }
   }

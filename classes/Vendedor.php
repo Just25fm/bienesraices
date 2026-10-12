@@ -51,6 +51,14 @@ class Vendedor extends ActiveRecord{
         self::$errores[] = "El email ya está registrado";
       }
     }
+
+    if (!is_null($this->telefono) && !preg_match('/^[0-9]{10}$/', $this->telefono)) {
+      self::$errores[] = "El teléfono debe tener exactamente 10 dígitos";
+    }
+
+    if (!is_null($this->email) && !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+      self::$errores[] = "El formato del email no es válido";
+    }
     
     return self::$errores;
   }
